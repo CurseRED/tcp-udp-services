@@ -1,34 +1,19 @@
 package model;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 
-public class EchoProtocolServer {
+public class EchoProtocolServer extends TcpServer{
 
-    private Socket socket;
-    private ServerSocket serverSocket;
-    private final int DEFAULT_PORT = 7777;
-    private InputStream in;
-    private OutputStream out;
     private Response response;
 
     public void start() throws IOException {
-        serverSocket = new ServerSocket(DEFAULT_PORT);
-        System.out.println("Server created!");
-        socket = serverSocket.accept();
-        System.out.println("Client connected!");
-        in = socket.getInputStream();
-        out = socket.getOutputStream();
+        super.start();
         response = new Response();
         response.start();
     }
 
     public void stop() throws IOException {
-        response.setStoped();
-        socket.close();
+        super.stop();
         serverSocket.close();
     }
 

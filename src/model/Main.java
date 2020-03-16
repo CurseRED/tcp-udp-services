@@ -17,7 +17,12 @@ public class Main {
                     EchoProtocolServer server = new EchoProtocolServer();
                     server.start();
                     break;
-                case 2: break;
+                case 2:
+                    TimeProtocolServer timeServer = new TimeProtocolServer();
+                    timeServer.start();
+                    timeServer.sendTime();
+                    timeServer.stop();
+                    break;
                 case 3: break;
                 case 4: break;
                 case 5: break;
@@ -27,14 +32,19 @@ public class Main {
         } else {
             switch (protocol) {
                 case 1:
-                    EchoProtocolClient client = new EchoProtocolClient();
-                    client.start();
+                    EchoProtocolClient echoClient = new EchoProtocolClient();
+                    echoClient.start();
                     String msg;
                     while (true) {
                         msg = in.nextLine();
-                        client.sendMessage(msg);
+                        echoClient.sendMessage(msg);
                     }
-                case 2: break;
+                case 2:
+                    TimeProtocolClient timeClient = new TimeProtocolClient();
+                    timeClient.start();
+                    System.out.println(timeClient.getTime());
+                    timeClient.stop();
+                    break;
                 case 3: break;
                 case 4: break;
                 case 5: break;
