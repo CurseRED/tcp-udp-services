@@ -11,11 +11,6 @@ public class TimeProtocolServer extends TcpServer {
         super.start(DEFAULT_PORT);
     }
 
-    @Override
-    public void stop() throws IOException {
-        super.stop();
-    }
-
     public void sendTime() throws IOException {
         long currentTime = System.currentTimeMillis();
         currentTime /= 1000;

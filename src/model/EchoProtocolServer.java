@@ -2,7 +2,7 @@ package model;
 
 import java.io.IOException;
 
-public class EchoProtocolServer extends TcpServer{
+public class EchoProtocolServer extends TcpServer {
 
     private Response response;
 
@@ -14,7 +14,7 @@ public class EchoProtocolServer extends TcpServer{
 
     public void stop() throws IOException {
         super.stop();
-        serverSocket.close();
+        response.setStoped();
     }
 
     private class Response extends Thread {

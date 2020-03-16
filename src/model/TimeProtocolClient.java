@@ -11,11 +11,6 @@ public class TimeProtocolClient extends TcpClient{
         super.start(DEFAULT_PORT);
     }
 
-    @Override
-    public void stop() throws IOException {
-        super.stop();
-    }
-
     public long getTime() throws IOException {
         byte[] buffer = new byte[128];
         in.read(buffer);

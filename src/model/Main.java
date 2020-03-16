@@ -61,11 +61,17 @@ public class Main {
                 case 4:
                     WhoIsProtocolClient whoIsClient = new WhoIsProtocolClient();
                     whoIsClient.start();
-                    String query = in.next() + "\n";
-                    System.out.println(whoIsClient.getWhoIs(query));
+                    String whoIsQuery = in.next();
+                    System.out.println(whoIsClient.getWhoIs(whoIsQuery));
                     whoIsClient.stop();
                     break;
-                case 5: break;
+                case 5:
+                    FingerProtocolClient fingerClient = new FingerProtocolClient();
+                    String fingerQuery = in.next();
+                    fingerClient.start(fingerQuery);
+                    fingerQuery = in.next();
+                    System.out.println(fingerClient.getFingerResponse(fingerQuery));
+                    break;
                 case 6: break;
                 case 7: break;
             }

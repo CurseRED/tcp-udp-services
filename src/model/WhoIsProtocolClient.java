@@ -13,6 +13,7 @@ public class WhoIsProtocolClient extends TcpClient {
     }
 
     public String getWhoIs(String msg) throws IOException {
+        msg = msg + "\n";
         out.write(msg.getBytes());
         byte[] buffer = new byte[512];
         in.read(buffer);

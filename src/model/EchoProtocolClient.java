@@ -2,7 +2,7 @@ package model;
 
 import java.io.IOException;
 
-public class EchoProtocolClient extends TcpClient{
+public class EchoProtocolClient extends TcpClient {
 
     private Response response;
 
