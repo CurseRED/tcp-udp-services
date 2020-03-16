@@ -34,6 +34,8 @@ public class TcpClient {
     }
 
     public void stop() throws IOException {
+        in.close();
+        out.close();
         socket.close();
     }
 

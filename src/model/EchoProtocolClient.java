@@ -10,13 +10,14 @@ public class EchoProtocolClient extends TcpClient {
     public void start() throws IOException {
         super.start();
         response = new Response();
+        response.setParent(this);
         response.start();
     }
 
     @Override
     public void stop() throws IOException {
         super.stop();
-        response.setStoped();
+        response.setStopped();
     }
 
     public void sendMessage(String msg) throws IOException {
@@ -25,18 +26,26 @@ public class EchoProtocolClient extends TcpClient {
 
     private class Response extends Thread {
 
-        private boolean isStoped = false;
+        private boolean isStopped = false;
+        private TcpClient parent;
 
-        public void setStoped() {
-            isStoped = true;
+        public void setStopped() {
+            isStopped = true;
+        }
+
+        public void setParent(TcpClient tcpClient) {
+            parent = tcpClient;
         }
 
         @Override
         public void run() {
-            while (!isStoped) {
+            while (!isStopped) {
                 try {
                     byte[] buffer = new byte[1024];
                     in.read(buffer);
+                    if (new String(buffer).trim().equalsIgnoreCase("!stop")) {
+                        parent.stop();
+                    }
                     System.out.println("Server response: " + new String(buffer));
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -9,31 +9,40 @@ public class EchoProtocolServer extends TcpServer {
     public void start() throws IOException {
         super.start();
         response = new Response();
+        response.setParent(this);
         response.start();
     }
 
     public void stop() throws IOException {
         super.stop();
-        response.setStoped();
+        response.setStopped();
     }
 
     private class Response extends Thread {
 
-        private boolean isStoped = false;
+        private boolean isStopped = false;
+        private TcpServer parent;
 
-        public void setStoped() {
-            isStoped = true;
+        public void setStopped() {
+            isStopped = true;
+        }
+
+        public void setParent(TcpServer tcpServer) {
+            parent = tcpServer;
         }
 
         @Override
         public void run() {
-            while (!isStoped) {
+            while (!isStopped) {
                 try {
                     byte[] buffer = new byte[1024];
                     in.read(buffer);
                     out.write(buffer);
+                    if (new String(buffer).trim().equalsIgnoreCase("!stop")) {
+                        parent.stop();
+                    }
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
             }
         }

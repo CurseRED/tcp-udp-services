@@ -33,6 +33,8 @@ public class TcpServer {
     }
 
     public void stop() throws IOException {
+        in.close();
+        out.close();
         socket.close();
         serverSocket.close();
     }
