@@ -2,9 +2,10 @@ package model;
 
 import java.io.IOException;
 
-public class RLoginProtocolClient extends TcpClient {
+public class RLoginProtocolServer extends TcpServer {
 
     private boolean isWorking = true;
+    private final String DEFAULT_PASSWORD = "12341234";
     private Response response;
 
     @Override
@@ -23,12 +24,15 @@ public class RLoginProtocolClient extends TcpClient {
         return isWorking;
     }
 
-    public void initializeConnection(String name1, String name2, String terminalType, int speed, String password) throws IOException {
-        String msg = "\0" + name1 + "\0" + name2 + "\0" + terminalType + "/" + speed + "\0";
-        out.write(msg.getBytes());
+    public void initializeConnection() throws IOException {
         byte[] buffer = new byte[256];
         in.read(buffer);
-        out.write(password.getBytes());
+        System.out.println(new String(buffer));
+        out.write("password".getBytes());
+        in.read(buffer);
+        if (new String(buffer).trim().equals(DEFAULT_PASSWORD)) {
+            sendMessage("All good!");
+        }
         response = new Response();
         response.setParent(this);
         response.start();
@@ -41,14 +45,14 @@ public class RLoginProtocolClient extends TcpClient {
     private class Response extends Thread {
 
         private boolean isStopped = false;
-        private TcpClient parent;
+        private TcpServer parent;
 
         public void setStopped() {
             isStopped = true;
         }
 
-        public void setParent(TcpClient tcpClient) {
-            parent = tcpClient;
+        public void setParent(TcpServer tcpServer) {
+            parent = tcpServer;
         }
 
         @Override
@@ -60,7 +64,7 @@ public class RLoginProtocolClient extends TcpClient {
                     if (new String(buffer).trim().equalsIgnoreCase("!stop")) {
                         parent.stop();
                     }
-                    System.out.println("Server response: " + new String(buffer));
+                    System.out.println("Client response: " + new String(buffer));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

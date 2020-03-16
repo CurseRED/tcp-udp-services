@@ -35,7 +35,16 @@ public class Main {
                 case 5:
                     System.out.println("Finger service is only for clients!");
                     break;
-                case 6: break;
+                case 6:
+                    RLoginProtocolServer rLoginServer = new RLoginProtocolServer();
+                    rLoginServer.start();
+                    rLoginServer.initializeConnection();
+                    String msg;
+                    while (rLoginServer.isWorking()) {
+                        msg = in.next();
+                        rLoginServer.sendMessage(msg);
+                    }
+                    break;
                 case 7: break;
             }
         } else {
@@ -77,8 +86,16 @@ public class Main {
                     break;
                 case 6:
                     RLoginProtocolClient rLoginClient = new RLoginProtocolClient();
+                    rLoginClient.start();
                     String name1 = in.next();
                     String name2 = in.next();
+                    String password = in.next();
+                    rLoginClient.initializeConnection(name1, name2, "vt100", 9600, password);
+                    String rLoginMsg;
+                    while (rLoginClient.isWorking()) {
+                        rLoginMsg = in.next();
+                        rLoginClient.sendMessage(rLoginMsg);
+                    }
                     break;
                 case 7: break;
             }
