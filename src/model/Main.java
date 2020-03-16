@@ -29,7 +29,9 @@ public class Main {
                     dayTimeServer.sendDayTime();
                     dayTimeServer.stop();
                     break;
-                case 4: break;
+                case 4:
+                    System.out.println("WhoIs service is only for clients!");
+                    break;
                 case 5: break;
                 case 6: break;
                 case 7: break;
@@ -56,7 +58,13 @@ public class Main {
                     System.out.println(dayTimeClient.getDayTime());
                     dayTimeClient.stop();
                     break;
-                case 4: break;
+                case 4:
+                    WhoIsProtocolClient whoIsClient = new WhoIsProtocolClient();
+                    whoIsClient.start();
+                    String query = in.next() + "\n";
+                    System.out.println(whoIsClient.getWhoIs(query));
+                    whoIsClient.stop();
+                    break;
                 case 5: break;
                 case 6: break;
                 case 7: break;

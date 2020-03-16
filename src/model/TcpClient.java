@@ -26,6 +26,13 @@ public class TcpClient {
         out = socket.getOutputStream();
     }
 
+    public void start(String ip, int port) throws IOException {
+        socket = new Socket(ip, port);
+        System.out.println("Connected to server!");
+        in = socket.getInputStream();
+        out = socket.getOutputStream();
+    }
+
     public void stop() throws IOException {
         socket.close();
     }
