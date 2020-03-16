@@ -23,7 +23,12 @@ public class Main {
                     timeServer.sendTime();
                     timeServer.stop();
                     break;
-                case 3: break;
+                case 3:
+                    DayTimeProtocolServer dayTimeServer = new DayTimeProtocolServer();
+                    dayTimeServer.start();
+                    dayTimeServer.sendDayTime();
+                    dayTimeServer.stop();
+                    break;
                 case 4: break;
                 case 5: break;
                 case 6: break;
@@ -45,7 +50,12 @@ public class Main {
                     System.out.println(timeClient.getTime());
                     timeClient.stop();
                     break;
-                case 3: break;
+                case 3:
+                    DayTimeProtocolClient dayTimeClient = new DayTimeProtocolClient();
+                    dayTimeClient.start();
+                    System.out.println(dayTimeClient.getDayTime());
+                    dayTimeClient.stop();
+                    break;
                 case 4: break;
                 case 5: break;
                 case 6: break;
