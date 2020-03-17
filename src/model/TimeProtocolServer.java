@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class TimeProtocolServer extends TcpServer {
 
@@ -12,6 +13,7 @@ public class TimeProtocolServer extends TcpServer {
     }
 
     public void sendTime() throws IOException {
+        LocalDateTime result = LocalDateTime.of(1900, 1, 1, 0, 0);
         long currentTime = System.currentTimeMillis();
         currentTime /= 1000;
         String response = Long.toString(currentTime);

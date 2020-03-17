@@ -14,6 +14,6 @@ public class TimeProtocolClient extends TcpClient{
     public long getTime() throws IOException {
         byte[] buffer = new byte[128];
         in.read(buffer);
-        return Long.parseLong(new String(buffer).trim());
+        return Long.parseLong(new String(buffer).trim()) + 2208988800L;
     }
 }
