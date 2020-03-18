@@ -1,2 +1,2 @@
-# tcp-udp-services
-TCP and UDP popular protocols implementation with Java
+# tcp-protocols
+TCP popular protocols implementation with Java
